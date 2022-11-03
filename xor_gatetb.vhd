@@ -16,9 +16,9 @@ architecture rtl of xor_gatetb is
 			    z_xor : out std_logic
             );
 
-        end component xor_gate;
+    end component xor_gate;
 
-        signal x, y, output : std_logic;
+    signal x, y, output : std_logic;
 
 	begin
 
