@@ -6,7 +6,7 @@ entity tFlipFlop is
 	
 		i_t : in std_logic;
 		i_clock : in std_logic;
-		o_q, o_qBar : out std_logic
+		q, qBar : out std_logic
 
 	);
 end entity tFlipFlop;
@@ -30,7 +30,7 @@ architecture rtl of tFlipFlop is
 
             i_d : in std_logic;
             i_clock : in std_logic;
-            o_q, o_qBar : out std_logic
+            q, qBar : out std_logic
 
         );
 
@@ -53,8 +53,8 @@ architecture rtl of tFlipFlop is
 
             i_d => tXor,
             i_clock => i_clock,
-            o_q => q,
-            o_qbar => qBar
+            q => q,
+            qbar => qBar
             
         );
 
