@@ -29,11 +29,9 @@ architecture rtl of d_ff is
 	
 		-- Component Instantiation
 		
-		first : entity work.sr_ff(rtl)
-					port map ( i_d, int_notD, int_notClock, int_q, int_qBar);
+		first : sr_ff port map ( i_d, int_notD, int_notClock, int_q, int_qBar);
 								  
-		second : entity work.sr_ff(rtl)
-						port map ( int_q, int_qBar, i_clock, o_q, o_qBar);
+		second : sr_ff port map ( int_q, int_qBar, i_clock, o_q, o_qBar);
 
 		-- Concurrent Signal Assignment
 
