@@ -5,8 +5,8 @@ entity tFlipFlop is
 	port(
 	
 		i_t : in std_logic;
-		i_clock : in std_logic;
-		q, qBar : out std_logic
+		t_clock : in std_logic;
+		out_q, out_qBar : out std_logic
 
 	);
 end entity tFlipFlop;
@@ -24,38 +24,77 @@ architecture rtl of tFlipFlop is
 
     end component xor_gate;
 
-    component d_ff is
-        
+    component nor_gate is 
+
         port(
 
-            i_d : in std_logic;
-            i_clock : in std_logic;
+            x_nor : in std_logic;
+            y_nor : in std_logic;
+
+            z_nor : out std_logic
+
+        );
+
+    end component nor_gate;
+
+    component and3_gate is 
+
+        port(
+
+            x_and : in std_logic;
+            y_and : in std_logic;
+            z_and : in std_logic;
+
+            out_and : out std_logic
+
+        );
+
+    end component and3_gate;
+
+    component srFlipFlop is
+
+        port(
+	
+            set, reset : in std_logic;
             q, qBar : out std_logic
-
+        
         );
 
-    end component d_ff;
+    end component srFlipFlop;
 
-    signal q, qBar : std_logic;
-    signal tXor : std_logic;
+    
+        signal rNorSignal, sNorSignal, qSignal, qBarSignal : std_logic;
 
-    begin 
+    begin
 
-        xorGate: xor_gate port map(
+        rAndGate: and3_gate port map (
+                x_and => i_t,
+                y_and => t_clock,
+                z_and => qSignal,
 
-            x_xor => q,
-            y_xor => i_t,
-            z_xor => tXor
-            
+                out_and => rNorSignal
+
+		);
+
+        sAndGate: and3_gate port map (
+                x_and => i_t,
+                y_and => t_clock,
+                z_and => qBarSignal,
+
+                out_and => sNorSignal
+
+		);
+
+        flipflopSR: srFLipFlop port map (
+
+            set => rNorSignal,
+            reset => sNorsignal,
+		    q => qSignal,
+            qBar => qBarSignal
+
         );
-
-        dFlipFlop: d_ff port map(
-
-            i_d => tXor,
-            i_clock => i_clock,
-            q => q,
-            qbar => qBar
-            
-        );
+        
+        out_q <= qSignal;
+        out_qBar <= qBarSignal;
 
 end rtl; 
